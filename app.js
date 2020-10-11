@@ -14,4 +14,11 @@ for (i = 8; i >= 1; i--) {
   }
 }
 
-$(`.file-5`).html('<img src="./styles/imgs/pawn.svg">')
+$(`.rank-2 .file-1`).html('<img src="./styles/imgs/pawn.svg">')
+$(`.rank-2 .file-2`).html('<img src="./styles/imgs/pawn.svg">')
+$(`.rank-2 .file-3`).html('<img src="./styles/imgs/pawn.svg">')
+$(`.rank-2 .file-4`).html('<img src="./styles/imgs/pawn.svg">')
+$(`.rank-2 .file-5`).html('<img src="./styles/imgs/pawn.svg">')
+$(`.rank-2 .file-6`).html('<img src="./styles/imgs/pawn.svg">')
+$(`.rank-2 .file-7`).html('<img src="./styles/imgs/pawn.svg">')
+$(`.rank-2 .file-8`).html('<img src="./styles/imgs/pawn.svg">')
