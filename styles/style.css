@@ -1,0 +1,14 @@
+#board {
+  border: 1px solid black;
+}
+#board .rank {
+  display: flex;
+}
+#board .rank .file {
+  height: 100px;
+  width: 100px;
+  display: grid;
+  place-items: center;
+}
+
+/*# sourceMappingURL=style.css.map */
