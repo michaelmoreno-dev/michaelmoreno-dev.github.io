@@ -52,7 +52,17 @@ $(`.rank-7 .file-6`).append($blackPawn.clone());
 $(`.rank-7 .file-7`).append($blackPawn.clone());
 $(`.rank-7 .file-8`).append($blackPawn.clone());
 
-
+let grabbedPiece = '';
 $('.file').on('click',function(){
-  alert($(this).children().eq(1).attr('class'));
+  if ($(this).children().length > 1) {
+    $(this).css({'border':'5px solid cyan', 'width':'90px', 'height':'90px'});
+    let $current = $(this).parent().attr('class').split(' ')[1];
+    $('.file').on('click',function(){
+      alert($current);
+      alert($(this).parent().attr('class').split(' ')[1]);
+    });
+  }
+  // console.log(($(this).children().eq(1).attr('class')));
+  // let grabbedPiece = $(this).children().eq(1).attr('class');
+  // alert(grabbedPiece);
 })
