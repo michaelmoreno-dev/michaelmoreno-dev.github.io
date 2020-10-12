@@ -10,5 +10,10 @@
   display: grid;
   place-items: center;
 }
+#board .rank .file h2 {
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+}
 
 /*# sourceMappingURL=style.css.map */
