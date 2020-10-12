@@ -53,9 +53,7 @@ $(`.rank-7 .file-7`).append($blackPawn.clone());
 $(`.rank-7 .file-8`).append($blackPawn.clone());
 
 
-$('.file').on('click',()=>{
+$('.file').on('click',function(){
   alert($(this).attr('class'));
   console.log($(this).attr("class"));
 })
-
-console.log($('.file').attr("class"));
