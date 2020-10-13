@@ -13,6 +13,7 @@ for (i = 8; i >= 1; i--) {
     color++;
   }
 }
+$('<div>').addClass('')
 
 // PIECES
 
@@ -52,27 +53,31 @@ $(`.rank-7 .file-6`).append($blackPawn.clone());
 $(`.rank-7 .file-7`).append($blackPawn.clone());
 $(`.rank-7 .file-8`).append($blackPawn.clone());
 
-let grabbedPiece = '';
-$('.file').on('click',function(){
-  if ($(this).children().length > 1) {
-    $(this).css({'border':'5px solid cyan', 'width':'90px', 'height':'90px'});
-    var current = {
-      asdf: 'hello',
-      $rank: `${$(this).parent().attr('class').split(' ')[1]}`,
-      $file: `${$(this).attr('class').split(' ')[1]}`,
-      $piece: $(this).children().eq(1),
-    }
 
-    
-    $('.file').on('click',function(){
-      $(this).css({ 'border': '5px solid red', 'width': '90px', 'height': '90px'})
-      console.log(current.$file);
-      console.log(current.$rank);
-      console.log(current.$piece);
-      $(this).append(current.$piece);
-    });
-  }
-  // console.log(($(this).children().eq(1).attr('class')));
-  // let grabbedPiece = $(this).children().eq(1).attr('class');
-  // alert(grabbedPiece);
-})
+function select() {
+  $('.file').on('click',function(){
+    if ($(this).children().length > 1) {
+      $(this).css({'border':'5px solid cyan', 'width':'90px', 'height':'90px'});
+      var current = {
+        asdf: 'hello',
+        $rank: `${$(this).parent().attr('class').split(' ')[1]}`,
+        $file: `${$(this).attr('class').split(' ')[1]}`,
+        $piece: $(this).children().eq(1),
+      }
+  
+      
+      $('.file').one('click',function(){
+        $('.file').off('click');
+        if ($(this))
+        $(this).css({ 'border': '5px solid red', 'width': '90px', 'height': '90px'})
+        console.log(current.$file);
+        console.log(current.$rank);
+        console.log(current.$piece);
+        $(this).append(current.$piece);
+  
+        select();
+      });
+    }
+  })
+}
+select();
