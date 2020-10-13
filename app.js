@@ -60,16 +60,16 @@ $('.file').on('click',function(){
       asdf: 'hello',
       $rank: `${$(this).parent().attr('class').split(' ')[1]}`,
       $file: `${$(this).attr('class').split(' ')[1]}`,
-      $test: ()=>{
-        console.log(this)
-      },
+      $piece: $(this).children().eq(1),
     }
-    
 
+    
     $('.file').on('click',function(){
-      $(this).css({'border':'5px solid red'})
+      $(this).css({ 'border': '5px solid red', 'width': '90px', 'height': '90px'})
       console.log(current.$file);
       console.log(current.$rank);
+      console.log(current.$piece);
+      $(this).append(current.$piece);
     });
   }
   // console.log(($(this).children().eq(1).attr('class')));
