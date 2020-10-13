@@ -95,11 +95,19 @@ function select() {
           if (turn == 0) {
             alert(turn);
             if (current.$file == target.$file && Math.abs(current.$rank - target.$rank) < 10) {
-              alert ('work');
-              $this.find('img').appendTo('.black-graveyard');
-              current.$piece.appendTo($this);
-              stats.white += worth[`${target.$piece.attr('class').split(' ')[1]}`]
-              turn++;
+              alert ('less than 2')
+              if ($this.children().length > 1) {
+                alert('piece present')
+                if (target.$piece.attr('class').split(' ')[0] == 'black') {
+                  alert('black');
+                  target.$piece.appendTo('.black-graveyard');
+                  current.$piece.appendTo($this);
+                  turn++
+                }
+                else {
+                  alert('Ally piece blocking!');
+                }
+              }
             }
             else {
               alert('Your pawn cannot move that far!')
