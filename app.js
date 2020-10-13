@@ -33,14 +33,6 @@ const stats = {
 
 const $whitePawn = $('<img src="./styles/imgs/whitepawn.svg">').addClass('white pawn')
 
-$(`.rank-2 .file-1`).append($whitePawn.clone());
-$(`.rank-2 .file-2`).append($whitePawn.clone());
-$(`.rank-2 .file-3`).append($whitePawn.clone());
-$(`.rank-2 .file-4`).append($whitePawn.clone());
-$(`.rank-2 .file-5`).append($whitePawn.clone());
-$(`.rank-4 .file-4`).append($whitePawn.clone());
-$(`.rank-2 .file-7`).append($whitePawn.clone());
-// $(`.rank-2 .file-8`).append($whitePawn.clone());
 
 const $whiteRook = $('<img src="./styles/imgs/whiterook.svg">').addClass('white rook')
 const $whiteKnight = $('<img src="./styles/imgs/whiteknight.svg">').addClass('white knight')
@@ -56,6 +48,14 @@ $('.rank-1 .file-6').append($whiteBishop.clone());
 $('.rank-1 .file-7').append($whiteKnight.clone());
 $('.rank-2 .file-8').append($whiteRook.clone());
 
+$(`.rank-2 .file-1`).append($whitePawn.clone());
+$(`.rank-2 .file-2`).append($whitePawn.clone());
+$(`.rank-2 .file-3`).append($whitePawn.clone());
+$(`.rank-2 .file-4`).append($whitePawn.clone());
+$(`.rank-2 .file-5`).append($whitePawn.clone());
+$(`.rank-2 .file-6`).append($whitePawn.clone());
+$(`.rank-3 .file-3`).append($whiteRook.clone());
+// $(`.rank-2 .file-8`).append($whitePawn.clone());
 const $blackPawn = $('<img src="./styles/imgs/blackpawn.svg">').addClass('black pawn')
 
 $(`.rank-7 .file-1`).append($blackPawn.clone());
@@ -65,7 +65,7 @@ $(`.rank-7 .file-4`).append($blackPawn.clone());
 $(`.rank-7 .file-5`).append($blackPawn.clone());
 $(`.rank-7 .file-6`).append($blackPawn.clone());
 $(`.rank-7 .file-7`).append($blackPawn.clone());
-$(`.rank-7 .file-8`).append($blackPawn.clone());
+$(`.rank-7 .file-8`).append($whitePawn.clone());
 
 let turn = 0;
 
@@ -80,6 +80,54 @@ function select() {
         $rank: parseInt($this.parent().attr('class').split(' ')[1].split('-')[1]),
         $piece: $this.children().eq(1),
       }
+
+      let validMoves = [];
+      if (current.$piece.attr('class').split(' ')[1] === 'rook') {
+        // LOOK UP
+        for (let q = current.$rank; q < 8; q++) {
+          let $query = $(`.rank-${q + 1} .file-${current.$file}`)
+          // console.log('check: ' + `.rank-${q + 1} .file-${current.$file}`);
+          if ($(`.rank-${q + 1} .file-${current.$file}`).children().length > 1) {
+            if ($query.children().eq(1).attr('class').split(' ')[0] == 'white') {
+              $(`.rank-${q} .file-${current.$file}`).css({ 'border-top': '5px solid cyan' })
+              break;
+            }
+            else {
+              validMoves.push([current.$file, q + 1])
+              $(`.rank-${q + 1} .file-${current.$file}`).css({ 'border-top': '5px solid cyan' })
+              // console.log('square blocked');
+              break;
+            }
+          }
+          $query.css({ 'border': '2px solid cyan', 'border-left': '5px solid cyan', 'border-right': '5px solid cyan', 'width': '90px' })
+          // console.log($query.parent().attr('class').split('-')[1]);
+          validMoves.push([current.$file, q + 1])
+          // console.log(validMoves[1]);
+        }
+        
+        // LOOK RIGHT
+        for (let q = current.$file; q < 8; q++) {
+          let $query = $(`.rank-${current.$rank} .file-${q + 1}`)
+          console.log('check: ' + `.rank-${current.$rank} .file-${q + 1}`);
+          if ($(`.rank-${current.$rank} .file-${q + 1}`).children().length > 1) {
+            if ($query.children().eq(1).attr('class').split(' ')[0] == 'white') {
+              $(`.rank-${current.$rank} .file-${q + 1}`).css({ 'border-top': '5px solid cyan' })
+              break;
+            }
+            else {
+              validMoves.push([q + 1, current.$rank])
+              $(`.rank-${current.$rank} .file-${q + 1}`).css({ 'border-top': '5px solid cyan' })
+              // console.log('square blocked');
+              break;
+            }
+          }
+          $query.css({ 'border': '2px solid cyan', 'border-left': '5px solid cyan', 'border-right': '5px solid cyan', 'width': '90px' })
+          // console.log($query.parent().attr('class').split('-')[1]);
+          validMoves.push([current.$file, q + 1])
+          // console.log(validMoves[1]);
+        }
+      }
+
       // Target Square
       $('.file').one('click',function(){
         let $this = $(this);
@@ -88,7 +136,22 @@ function select() {
           $rank: parseInt($this.parent().attr('class').split(' ')[1].split('-')[1]),
           $piece: $this.children().eq(1),
         }
-        $('.file').off('click');
+        $('.file').off('click'); // put this at top
+
+        for (let i = 0; i < validMoves.length; i++) {
+          console.log(`validMoves ${validMoves[i]}`);
+          console.log(`file & rank${target.$file},${target.$rank}`);
+          if (validMoves[i] == `${target.$file},${target.$rank}`) {
+            if ($this.children().length > 1) {
+              if (target.$piece.attr('class').split(' ')[0] == 'black') {
+                target.$piece.appendTo('.black-graveyard');
+                current.$piece.appendTo($this);
+              }
+            }
+            current.$piece.appendTo($this);
+          }
+        }
+
         // IF PIECE IS PAWN
         if (current.$piece.attr('class').split(' ')[1] === 'pawn') {
           console.log('pawn selected');
@@ -122,25 +185,7 @@ function select() {
           //   alert('Your pawn cannot move that far!')
           // }
         }
-        else if (current.$piece.attr('class').split(' ')[1] === 'rook') {
-          let validMoves = [];
-          for (let q = current.$rank; q < 8; q++) {
-            let $query = $(`.rank-${q + 1} .file-${current.$file}`)
-            // console.log('check: ' + `.rank-${q + 1} .file-${current.$file}`);
-            if ($(`.rank-${q + 1} .file-${current.$file}`).children().length > 1) {
-              console.log('square blocked');
-              $(`.rank-${q} .file-${current.$file}`).css({'border-top':'5px solid cyan'})
-              break;
-            }
-            $(`.rank-${q + 1} .file-${current.$file}`).css({'border':'2px solid cyan', 'border-left': '5px solid cyan', 'border-right': '5px solid cyan', 'width': '90px'})
-            console.log($query.parent().attr('class').split('-')[1]);
-            validMoves.push([current.$file, q + 1])
-            console.log(validMoves[1]);
-          } 
-          // for (let q = current.$file; q < 8; q++) {
-
-          // }
-        }
+        
         // if ($this.children().length > 1) {
         //   if (target.$piece.attr('class').split(' ')[0] === 'black') {
         //     target.$piece.appendTo('.black-graveyard')
