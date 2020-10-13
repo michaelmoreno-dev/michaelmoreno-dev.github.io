@@ -104,6 +104,28 @@ function select() {
           validMoves.push([current.$file, q + 1])
           // console.log(validMoves[1]);
         }
+
+        // LOOK DOWN
+        for (let q = current.$rank; q > 1; q--) {
+          let $query = $(`.rank-${q - 1} .file-${current.$file}`)
+          // console.log('check: ' + `.rank-${q + 1} .file-${current.$file}`);
+          if ($(`.rank-${q - 1} .file-${current.$file}`).children().length > 1) {
+            if ($query.children().eq(1).attr('class').split(' ')[0] == 'white') {
+              $(`.rank-${q} .file-${current.$file}`).css({ 'border-top': '5px solid cyan' })
+              break;
+            }
+            else {
+              validMoves.push([current.$file, q - 1])
+              $(`.rank-${q - 1} .file-${current.$file}`).css({ 'border-top': '5px solid cyan' })
+              // console.log('square blocked');
+              break;
+            }
+          }
+          $query.css({ 'border': '2px solid cyan', 'border-left': '5px solid cyan', 'border-right': '5px solid cyan', 'width': '90px' })
+          // console.log($query.parent().attr('class').split('-')[1]);
+          validMoves.push([current.$file, q - 1])
+          // console.log(validMoves[1]);
+        }
         
         // LOOK RIGHT
         for (let q = current.$file; q < 8; q++) {
@@ -123,12 +145,33 @@ function select() {
           }
           $query.css({ 'border': '2px solid cyan', 'border-left': '5px solid cyan', 'border-right': '5px solid cyan', 'width': '90px' })
           // console.log($query.parent().attr('class').split('-')[1]);
-          validMoves.push([current.$file, q + 1])
+          validMoves.push([q + 1, current.$rank])
+          // console.log(validMoves[1]);
+        }
+        // LOOK LEFT
+        for (let q = current.$file; q > 1; q--) {
+          let $query = $(`.rank-${current.$rank} .file-${q - 1}`)
+          console.log('check: ' + `.file-${q - 1} .rank-${current.$rank}`);
+          if ($query.children().length > 2) {
+            if ($query.children().eq(1).attr('class').split(' ')[0] == 'white') {
+              $(`.rank-${current.$rank} .file-${q - 1}`).css({ 'border-top': '5px solid cyan' })
+              break;
+            }
+            else {
+              validMoves.push([q - 1, current.$rank])
+              $(`.file-${q - 1} .rank-${current.$rank}`).css({ 'border-top': '5px solid cyan' })
+              // console.log('square blocked');
+              break;
+            }
+          }
+          $query.css({ 'border': '2px solid cyan', 'border-left': '5px solid cyan', 'border-right': '5px solid cyan', 'width': '90px' })
+          // console.log($query.parent().attr('class').split('-')[1]);
+          validMoves.push([q - 1, current.$rank])
           // console.log(validMoves[1]);
         }
       }
 
-      // Target Square
+      // TARGET SQUARE
       $('.file').one('click',function(){
         let $this = $(this);
         let target = {
@@ -139,8 +182,7 @@ function select() {
         $('.file').off('click'); // put this at top
 
         for (let i = 0; i < validMoves.length; i++) {
-          console.log(`validMoves ${validMoves[i]}`);
-          console.log(`file & rank${target.$file},${target.$rank}`);
+          console.log(`validMoves: ${validMoves[i]}`);
           if (validMoves[i] == `${target.$file},${target.$rank}`) {
             if ($this.children().length > 1) {
               if (target.$piece.attr('class').split(' ')[0] == 'black') {
@@ -151,6 +193,7 @@ function select() {
             current.$piece.appendTo($this);
           }
         }
+        console.log(`target: ${target.$file}, ${target.$rank}`);
 
         // IF PIECE IS PAWN
         if (current.$piece.attr('class').split(' ')[1] === 'pawn') {

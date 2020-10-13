@@ -5,3 +5,7 @@ instead of if condition for pawn, store valid move property of piece and query t
 
 instead of manually checking each target position, have each position iterate until invalid move, storing each position in an array that will then be looked to for valid movements.
 maybe make this happen in first handler.
+
+can you do each direction check without writing all four directions over and over again? like a function
+
+is there an easier way to turn off the border styling?
