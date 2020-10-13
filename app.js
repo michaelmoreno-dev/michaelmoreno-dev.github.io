@@ -49,7 +49,7 @@ $('.rank-1 .file-4').append($whiteQueen.clone());
 $('.rank-1 .file-5').append($whiteKing.clone());
 $('.rank-1 .file-6').append($whiteBishop.clone());
 $('.rank-1 .file-7').append($whiteKnight.clone());
-$('.rank-2 .file-8').append($whiteRook.clone());
+$('.rank-1 .file-8').append($whiteRook.clone());
 
 $(`.rank-2 .file-1`).append($whitePawn.clone());
 $(`.rank-2 .file-2`).append($whitePawn.clone());
@@ -57,15 +57,14 @@ $(`.rank-2 .file-3`).append($whitePawn.clone());
 $(`.rank-2 .file-4`).append($whitePawn.clone());
 $(`.rank-2 .file-5`).append($whitePawn.clone());
 $(`.rank-2 .file-6`).append($whitePawn.clone());
-$(`.rank-3 .file-3`).append($whiteRook.clone());
-// $(`.rank-2 .file-8`).append($whitePawn.clone());
+$(`.rank-2 .file-7`).append($whitePawn.clone());
+$(`.rank-2 .file-8`).append($whitePawn.clone());
 const $blackPawn = $('<img src="./styles/imgs/blackpawn.svg">').addClass('black pawn')
-
-const $blackRook = $('<img src="./styles/imgs/blackrook.svg">').addClass('white rook')
-const $blackKnight = $('<img src="./styles/imgs/blackknight.svg">').addClass('white knight')
-const $blackBishop = $('<img src="./styles/imgs/blackbishop.svg">').addClass('white bishop')
-const $blackKing = $('<img src="./styles/imgs/blackking.svg">').addClass('white king')
-const $blackQueen = $('<img src="./styles/imgs/blackqueen.svg">').addClass('white queen')
+const $blackRook = $('<img src="./styles/imgs/blackrook.svg">').addClass('black rook')
+const $blackKnight = $('<img src="./styles/imgs/blackknight.svg">').addClass('black knight')
+const $blackBishop = $('<img src="./styles/imgs/blackbishop.svg">').addClass('black bishop')
+const $blackKing = $('<img src="./styles/imgs/blackking.svg">').addClass('black king')
+const $blackQueen = $('<img src="./styles/imgs/blackqueen.svg">').addClass('black queen')
 
 $(`.rank-7 .file-1`).append($blackPawn.clone());
 $(`.rank-7 .file-2`).append($blackPawn.clone());
@@ -74,7 +73,16 @@ $(`.rank-7 .file-4`).append($blackPawn.clone());
 $(`.rank-7 .file-5`).append($blackPawn.clone());
 $(`.rank-7 .file-6`).append($blackPawn.clone());
 $(`.rank-7 .file-7`).append($blackPawn.clone());
-$(`.rank-7 .file-8`).append($whitePawn.clone());
+$(`.rank-7 .file-8`).append($blackPawn.clone());
+
+$('.rank-8 .file-1').append($blackRook.clone());
+$('.rank-8 .file-2').append($blackKnight.clone());
+$('.rank-8 .file-3').append($blackBishop.clone());
+$('.rank-8 .file-4').append($blackKing.clone());
+$('.rank-8 .file-5').append($blackQueen.clone());
+$('.rank-8 .file-6').append($blackBishop.clone());
+$('.rank-8 .file-7').append($blackKnight.clone());
+$('.rank-8 .file-8').append($blackRook.clone());
 
 let turn = 0;
 

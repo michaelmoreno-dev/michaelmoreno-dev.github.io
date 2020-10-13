@@ -11,3 +11,5 @@ can you do each direction check without writing all four directions over and ove
 is there an easier way to turn off the border styling?
 
 make capture a function for reusability
+
+use variables in svgs for colors
