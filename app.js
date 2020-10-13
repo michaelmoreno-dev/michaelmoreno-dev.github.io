@@ -18,6 +18,19 @@ $('<div>').addClass('black-graveyard').appendTo('.container');
 
 // PIECES
 
+const worth = {
+  pawn: 1,
+  bishop: 3,
+  knight: 3,
+  rook: 5,
+  queen: 9,
+}
+
+const stats = {
+  white: 0,
+  black: 0,
+}
+
 const $whitePawn = $('<img src="./styles/imgs/whitepawn.svg">').addClass('white pawn')
 
 $(`.rank-2 .file-1`).append($whitePawn.clone());
@@ -54,45 +67,73 @@ $(`.rank-7 .file-6`).append($blackPawn.clone());
 $(`.rank-7 .file-7`).append($blackPawn.clone());
 $(`.rank-7 .file-8`).append($blackPawn.clone());
 
+let turn = 0;
 
 function select() {
+  // Current Square
   $('.file').on('click',function(){
     let $this = $(this);
     if ($this.children().length > 1) {
       $this.css({'border':'5px solid cyan', 'width':'90px', 'height':'90px'});
       var current = {
-        $rank: `${$this.parent().attr('class').split(' ')[1]}`,
-        $file: `${$this.attr('class').split(' ')[1]}`,
+        $rank: $this.parent().attr('class').split(' ')[1].split('-')[1],
+        $file: $this.attr('class').split(' ')[1].split('-')[1],
         $piece: $this.children().eq(1),
       }
-  
-      
+      // Target Square
       $('.file').one('click',function(){
         let $this = $(this);
         let target = {
-          $rank: $this.parent().attr('class').split(' ')[1],
-          $file: $this.attr('class').split(' ')[1],
+          $rank: $this.parent().attr('class').split(' ')[1].split('-')[1],
+          $file: $this.attr('class').split(' ')[1].split('-')[1],
           $piece: $this.children().eq(1),
         }
         $('.file').off('click');
-        if ($this.children().length > 1) {
-          alert('success');
-          if (target.$piece.attr('class').split(' ')[0] == 'black') {
-            target.$piece.appendTo('.black-graveyard')
-            $this.append(current.$piece);
-            alert ('capture!');
+        // IF PIECE IS PAWN
+        if (current.$piece.attr('class').split(' ')[1] === 'pawn') {
+          // IF FIRST TURN
+          if (turn == 0) {
+            alert(turn);
+            if (current.$file == target.$file && Math.abs(current.$rank - target.$rank) < 10) {
+              alert ('work');
+              $this.find('img').appendTo('.black-graveyard');
+              current.$piece.appendTo($this);
+              stats.white += worth[`${target.$piece.attr('class').split(' ')[1]}`]
+              turn++;
+            }
+            else {
+              alert('Your pawn cannot move that far!')
+            }
           }
           else {
-            alert('Square Occupied!');
+            alert(turn);
+            if (current.$file == target.$file && Math.abs(current.$rank - target.$rank) < 10) {
+              alert('work');
+              current.$piece.appendTo($this);
+              turn++;
+            }
+            else {
+              alert('Your pawn cannot move that far!')
+            }
           }
         }
-        else {
-          $this.append(current.$piece);
-        }
+        // if ($this.children().length > 1) {
+        //   if (target.$piece.attr('class').split(' ')[0] === 'black') {
+        //     target.$piece.appendTo('.black-graveyard')
+        //     $this.append(current.$piece);
+        //     alert ('capture!');
+        //   }
+        //   else {
+        //     alert('Square Occupied!');
+        //   }
+        // }
+        // else {
+        //   $this.append(current.$piece);
+        // }
         $this.css({ 'border': '5px solid red', 'width': '90px', 'height': '90px'})
-        console.log(current.$file);
-        console.log(current.$rank);
-        console.log(current.$piece);
+        // console.log(current.$file);
+        // console.log(current.$rank);
+        // console.log(current.$piece);
   
         select();
       });
