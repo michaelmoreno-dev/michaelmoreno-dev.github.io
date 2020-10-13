@@ -9,3 +9,5 @@ maybe make this happen in first handler.
 can you do each direction check without writing all four directions over and over again? like a function
 
 is there an easier way to turn off the border styling?
+
+make capture a function for reusability
