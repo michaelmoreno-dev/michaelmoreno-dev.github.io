@@ -38,7 +38,7 @@ $(`.rank-2 .file-2`).append($whitePawn.clone());
 $(`.rank-2 .file-3`).append($whitePawn.clone());
 $(`.rank-2 .file-4`).append($whitePawn.clone());
 $(`.rank-2 .file-5`).append($whitePawn.clone());
-$(`.rank-2 .file-6`).append($whitePawn.clone());
+$(`.rank-4 .file-4`).append($whitePawn.clone());
 $(`.rank-2 .file-7`).append($whitePawn.clone());
 $(`.rank-2 .file-8`).append($whitePawn.clone());
 
@@ -95,11 +95,11 @@ function select() {
           if (turn == 0) {
             alert(turn);
             if (current.$file == target.$file && Math.abs(current.$rank - target.$rank) < 10) {
-              alert ('less than 2')
+              alert('less than 2')
               if ($this.children().length > 1) {
                 alert('piece present')
                 if (target.$piece.attr('class').split(' ')[0] == 'black') {
-                  alert('black');
+                  alert('free');
                   target.$piece.appendTo('.black-graveyard');
                   current.$piece.appendTo($this);
                   turn++
