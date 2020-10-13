@@ -91,18 +91,32 @@ function select() {
         $('.file').off('click');
         // IF PIECE IS PAWN
         if (current.$piece.attr('class').split(' ')[1] === 'pawn') {
+          console.log('pawn selected');
           // IF FIRST TURN
-          if (current.$file == target.$file && current.$rank !== target.$rank && (Math.abs(current.$rank - target.$rank) < 2 || (Math.abs(current.$rank - target.$rank) < 3 && turn == 0))) {
-            alert('worked');
+          if (current.$file == target.$file && current.$rank !== target.$rank && (Math.abs(current.$rank - target.$rank) < 2 || (Math.abs(current.$rank - target.$rank) < 10 && turn == 0))) {
+            console.log('legal move');
             if ($this.children().length < 2) {
+              console.log('target square available');
               current.$piece.appendTo($this);
               turn++;
+            }
+          }
+          else if (Math.abs(target.$file - current.$file) == 1 && target.$rank > current.$rank) {
+            console.log('upper corner square targeted');
+            if ($this.children().length > 1) {
+              console.log('target square occupied');
+              if (target.$piece.attr('class').split(' ')[0] === 'black') {
+                console.log('enemy occupied ');
+                target.$piece.appendTo('.black-graveyard');
+                console.log('captured!');
+                current.$piece.appendTo($this);
+              }
             }
           }
           else {
             alert('failed');
           }
-          console.log(`file: .${current.$file + 1} rank: .${current.$rank + 1}`);
+          // console.log(`file: .${current.$file + 1} rank: .${current.$rank + 1}`);
           // else if ($(`.${current.$rank+1} .${current.$file+1}`))
           // else {
           //   alert('Your pawn cannot move that far!')
