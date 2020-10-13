@@ -1,19 +1,27 @@
-#board {
-  border: 1px solid black;
-}
-#board .rank {
+.container {
   display: flex;
 }
-#board .rank .file {
+.container #board {
+  border: 1px solid black;
+}
+.container #board .rank {
+  display: flex;
+}
+.container #board .rank .file {
   height: 100px;
   width: 100px;
   display: grid;
   place-items: center;
 }
-#board .rank .file h2 {
+.container #board .rank .file h2 {
   position: absolute;
   z-index: 1;
   margin: 0;
+}
+.container .black-graveyard {
+  background-color: blue;
+  height: 800px;
+  width: 100px;
 }
 
 /*# sourceMappingURL=style.css.map */

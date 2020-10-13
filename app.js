@@ -1,4 +1,4 @@
-$('<div>').attr('id','board').appendTo('body');
+$('<div>').attr('id','board').appendTo('.container');
 let color = 1;
 for (i = 8; i >= 1; i--) {
   $('<div>').addClass(`rank rank-${i}`).appendTo('#board');
@@ -13,7 +13,8 @@ for (i = 8; i >= 1; i--) {
     color++;
   }
 }
-$('<div>').addClass('')
+$('<div>').addClass('white graveyard').prependTo('.container');
+$('<div>').addClass('black-graveyard').appendTo('.container');
 
 // PIECES
 
@@ -56,24 +57,42 @@ $(`.rank-7 .file-8`).append($blackPawn.clone());
 
 function select() {
   $('.file').on('click',function(){
-    if ($(this).children().length > 1) {
-      $(this).css({'border':'5px solid cyan', 'width':'90px', 'height':'90px'});
+    let $this = $(this);
+    if ($this.children().length > 1) {
+      $this.css({'border':'5px solid cyan', 'width':'90px', 'height':'90px'});
       var current = {
-        asdf: 'hello',
-        $rank: `${$(this).parent().attr('class').split(' ')[1]}`,
-        $file: `${$(this).attr('class').split(' ')[1]}`,
-        $piece: $(this).children().eq(1),
+        $rank: `${$this.parent().attr('class').split(' ')[1]}`,
+        $file: `${$this.attr('class').split(' ')[1]}`,
+        $piece: $this.children().eq(1),
       }
   
       
       $('.file').one('click',function(){
+        let $this = $(this);
+        let target = {
+          $rank: $this.parent().attr('class').split(' ')[1],
+          $file: $this.attr('class').split(' ')[1],
+          $piece: $this.children().eq(1),
+        }
         $('.file').off('click');
-        if ($(this))
-        $(this).css({ 'border': '5px solid red', 'width': '90px', 'height': '90px'})
+        if ($this.children().length > 1) {
+          alert('success');
+          if (target.$piece.attr('class').split(' ')[0] == 'black') {
+            target.$piece.appendTo('.black-graveyard')
+            $this.append(current.$piece);
+            alert ('capture!');
+          }
+          else {
+            alert('Square Occupied!');
+          }
+        }
+        else {
+          $this.append(current.$piece);
+        }
+        $this.css({ 'border': '5px solid red', 'width': '90px', 'height': '90px'})
         console.log(current.$file);
         console.log(current.$rank);
         console.log(current.$piece);
-        $(this).append(current.$piece);
   
         select();
       });
