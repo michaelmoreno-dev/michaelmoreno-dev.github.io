@@ -56,10 +56,20 @@ let grabbedPiece = '';
 $('.file').on('click',function(){
   if ($(this).children().length > 1) {
     $(this).css({'border':'5px solid cyan', 'width':'90px', 'height':'90px'});
-    let $current = $(this).parent().attr('class').split(' ')[1];
+    var current = {
+      asdf: 'hello',
+      $rank: `${$(this).parent().attr('class').split(' ')[1]}`,
+      $file: `${$(this).attr('class').split(' ')[1]}`,
+      $test: ()=>{
+        console.log(this)
+      },
+    }
+    
+
     $('.file').on('click',function(){
-      alert($current);
-      alert($(this).parent().attr('class').split(' ')[1]);
+      $(this).css({'border':'5px solid red'})
+      console.log(current.$file);
+      console.log(current.$rank);
     });
   }
   // console.log(($(this).children().eq(1).attr('class')));
