@@ -40,7 +40,7 @@ $(`.rank-2 .file-4`).append($whitePawn.clone());
 $(`.rank-2 .file-5`).append($whitePawn.clone());
 $(`.rank-4 .file-4`).append($whitePawn.clone());
 $(`.rank-2 .file-7`).append($whitePawn.clone());
-$(`.rank-2 .file-8`).append($whitePawn.clone());
+// $(`.rank-2 .file-8`).append($whitePawn.clone());
 
 const $whiteRook = $('<img src="./styles/imgs/whiterook.svg">').addClass('white rook')
 const $whiteKnight = $('<img src="./styles/imgs/whiteknight.svg">').addClass('white knight')
@@ -54,7 +54,7 @@ $('.rank-1 .file-4').append($whiteQueen.clone());
 $('.rank-1 .file-5').append($whiteKing.clone());
 $('.rank-1 .file-6').append($whiteBishop.clone());
 $('.rank-1 .file-7').append($whiteKnight.clone());
-$('.rank-1 .file-8').append($whiteRook.clone());
+$('.rank-2 .file-8').append($whiteRook.clone());
 
 const $blackPawn = $('<img src="./styles/imgs/blackpawn.svg">').addClass('black pawn')
 
@@ -120,6 +120,25 @@ function select() {
           // else if ($(`.${current.$rank+1} .${current.$file+1}`))
           // else {
           //   alert('Your pawn cannot move that far!')
+          // }
+        }
+        else if (current.$piece.attr('class').split(' ')[1] === 'rook') {
+          let validMoves = [];
+          for (let q = current.$rank; q < 8; q++) {
+            let $query = $(`.rank-${q + 1} .file-${current.$file}`)
+            // console.log('check: ' + `.rank-${q + 1} .file-${current.$file}`);
+            if ($(`.rank-${q + 1} .file-${current.$file}`).children().length > 1) {
+              console.log('square blocked');
+              $(`.rank-${q} .file-${current.$file}`).css({'border-top':'5px solid cyan'})
+              break;
+            }
+            $(`.rank-${q + 1} .file-${current.$file}`).css({'border':'2px solid cyan', 'border-left': '5px solid cyan', 'border-right': '5px solid cyan', 'width': '90px'})
+            console.log($query.parent().attr('class').split('-')[1]);
+            validMoves.push([current.$file, q + 1])
+            console.log(validMoves[1]);
+          } 
+          // for (let q = current.$file; q < 8; q++) {
+
           // }
         }
         // if ($this.children().length > 1) {

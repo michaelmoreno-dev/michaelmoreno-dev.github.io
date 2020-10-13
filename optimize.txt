@@ -2,3 +2,6 @@ maybe make turn condition inside of pawn condition so that it doesn't have to ru
 or combine condition OR turn
 
 instead of if condition for pawn, store valid move property of piece and query that in bracket notation as placeholder for movements.
+
+instead of manually checking each target position, have each position iterate until invalid move, storing each position in an array that will then be looked to for valid movements.
+maybe make this happen in first handler.
