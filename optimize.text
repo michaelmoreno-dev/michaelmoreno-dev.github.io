@@ -1,0 +1,4 @@
+maybe make turn condition inside of pawn condition so that it doesn't have to run as much. Unless you need other events on the first turn.
+or combine condition OR turn
+
+instead of if condition for pawn, store valid move property of piece and query that in bracket notation as placeholder for movements.
