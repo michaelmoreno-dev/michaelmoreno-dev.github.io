@@ -13,3 +13,5 @@ is there an easier way to turn off the border styling?
 make capture a function for reusability
 
 use variables in svgs for colors
+
+is let validMoves = []; caching a new array forever everytime?

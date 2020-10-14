@@ -99,6 +99,16 @@ function select() {
       }
 
       let validMoves = [];
+      // IF PIECE IS KNIGHT
+      if (current.$piece.attr('class').split(' ')[1] === 'knight') {
+        for (let i = 0; i < 8; i++) {
+          
+        }
+        // $(`.rank-${current.$rank + 2} .file-${current.$file + 1}`).css('background-color','blue');
+        // $(`.rank-${current.$rank + 2} .file-${current.$file + -1}`).css('background-color','blue');
+      }
+      
+      // IF PIECE IS ROOK
       if (current.$piece.attr('class').split(' ')[1] === 'rook') {
         // LOOK UP
         for (let q = current.$rank; q < 8; q++) {
@@ -219,7 +229,7 @@ function select() {
         if (current.$piece.attr('class').split(' ')[1] === 'pawn') {
           console.log('pawn selected');
           // IF FIRST TURN
-          if (current.$file == target.$file && current.$rank !== target.$rank && (Math.abs(current.$rank - target.$rank) < 2 || (Math.abs(current.$rank - target.$rank) < 10 && turn == 0))) {
+          if (current.$file == target.$file && current.$rank < target.$rank && (Math.abs(current.$rank - target.$rank) < 2 || (Math.abs(current.$rank - target.$rank) < 3 && current.$rank == 2))) {
             console.log('legal move');
             if ($this.children().length < 2) {
               console.log('target square available');
@@ -239,9 +249,6 @@ function select() {
                 
               }
             }
-          }
-          else {
-            alert('failed');
           }
           // console.log(`file: .${current.$file + 1} rank: .${current.$rank + 1}`);
           // else if ($(`.${current.$rank+1} .${current.$file+1}`))
