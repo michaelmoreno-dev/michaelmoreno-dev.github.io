@@ -43,7 +43,7 @@ const $whiteBishop = $('<img src="./styles/imgs/whitebishop.svg">').addClass('wh
 const $whiteKing = $('<img src="./styles/imgs/whiteking.svg">').addClass('white king')
 const $whiteQueen = $('<img src="./styles/imgs/whitequeen.svg">').addClass('white queen')
 $('.rank-1 .file-1').append($whiteRook.clone());
-$('.rank-1 .file-2').append($whiteKnight.clone());
+$('.rank-5 .file-5').append($whiteKnight.clone());
 $('.rank-1 .file-3').append($whiteBishop.clone());
 $('.rank-1 .file-4').append($whiteQueen.clone());
 $('.rank-1 .file-5').append($whiteKing.clone());
@@ -101,11 +101,35 @@ function select() {
       let validMoves = [];
       // IF PIECE IS KNIGHT
       if (current.$piece.attr('class').split(' ')[1] === 'knight') {
-        for (let i = 0; i < 8; i++) {
-          
+        let toggle = false;
+        for (let i = 0; i < 10; i++) {
+          console.log(`iteration: ${i}`);
+          let y = toggle ? 2:1
+          let x = toggle ? 1:2
+          if (i % 2 == 0) {
+            toggle = !toggle;
+          }
+          if (i >= 2 && i < 4) {
+            y *= -1;
+            x *= -1;
+            console.log('First IF');
+          }
+          if (i >= 4 && i < 6) {
+            x *= -1;
+            console.log('First IF');
+          }
+          if (i >= 6 && i < 8) {
+            y *= -1;
+            console.log('First IF');
+          }
+          let $query = $(`.rank-${current.$rank + y} .file-${current.$file + x}`);
+          console.log(`rank: ${y} file: ${x}`);
+
+          if ($query.children().length < 3 || $query.children().eq(1).attr('class').split(' ')[0] === 'black'){
+            $query.css({'border':'5px solid cyan'})
+            validMoves.push([$query.attr('class').split('-')[1],$query.parent().attr('class').split('-')[1]]);
+          }
         }
-        // $(`.rank-${current.$rank + 2} .file-${current.$file + 1}`).css('background-color','blue');
-        // $(`.rank-${current.$rank + 2} .file-${current.$file + -1}`).css('background-color','blue');
       }
       
       // IF PIECE IS ROOK
@@ -116,7 +140,7 @@ function select() {
           // console.log('check: ' + `.rank-${q + 1} .file-${current.$file}`);
           if ($query.children().length > 1) {
             if ($query.children().eq(1).attr('class').split(' ')[0] == 'white') {
-              $(`.rank-${q} .file-${current.$file}`).css({ 'border-top': '5px solid cyan' })
+              $(`.rank-${q} .file-${current.$file}`).css({'border-top': '5px solid cyan' })
               break;
             }
             else {
