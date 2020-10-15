@@ -2,7 +2,8 @@
   display: flex;
 
   #board {
-    border: 1px solid black;
+    // border: 1px solid black;
+    box-shadow: 0 0 10px 5px #ccc;
   
     .rank {
       display: flex;
