@@ -6,14 +6,16 @@ function bishop(current, validMoves) {
         if ($query.length < 1) {
           break;
         }
-        $query.css('border','5px solid green')
         if ($query.children().length > 1) {
           if ($query.children().eq(1).attr('class').split(' ')[0] === 'white') {
             break;
           }
           i = 8;
         }
-        $query.css('background-color', 'blue')
+        $query.css({
+          'z-index':'1',
+          transition: 'box-shadow 0.3s ease-in-out', 'box-shadow':'0 0 10px 5px cyan'
+        })
         console.log($query.attr('class'));
         validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
       }

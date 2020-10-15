@@ -93,7 +93,7 @@ function select() {
         // console.log(current.$rank);
         // console.log(current.$piece);
   
-        $('.file').css({'border':'none', 'height':'100px', 'width':'100px'})
+        $('.file').css({'border':'none', 'box-shadow':'none', 'outline':'none', 'height':'100px', 'width':'100px'})
         select();
       });
     }
