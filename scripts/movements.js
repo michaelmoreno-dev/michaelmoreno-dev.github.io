@@ -1,20 +1,26 @@
 function bishop(current, validMoves) {
   if (current.$piece.attr('class').split(' ')[1] === 'bishop') {
-    for (let i = 1; i <= 8; i++) {
-      let $query = $(`.rank-${current.$rank + i} .file-${current.$file + i}`)
-      if ($query.length < 1) {
-        break;
-      }
-      if ($query.children().length > 1) {
-        if ($query.children().eq(1).attr('class').split(' ')[0] === 'white') {
+    function bishopMove(d) {
+      for (let i = d; Math.abs(i) <= 8; i+=i) {
+        console.log(i);
+        let $query = $(`.rank-${current.$rank + i} .file-${current.$file + i}`)
+        if ($query.length < 1) {
           break;
         }
-        i = 8;
+        $query.css('border','5px solid green')
+        if ($query.children().length > 1) {
+          if ($query.children().eq(1).attr('class').split(' ')[0] === 'white') {
+            break;
+          }
+          i = 8;
+        }
+        $query.css('background-color', 'blue')
+        console.log($query.attr('class'));
+        validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
       }
-      $query.css('background-color','blue')
-      console.log($query.attr('class'));
-      validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
     }
+    // bishopMove(1);
+    bishopMove(-1);
   }
 }
 

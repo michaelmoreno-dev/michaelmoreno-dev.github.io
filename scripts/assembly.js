@@ -40,7 +40,7 @@ const $whiteKnight = $('<img src="./styles/imgs/whiteknight.svg">').addClass('wh
 const $whiteBishop = $('<img src="./styles/imgs/whitebishop.svg">').addClass('white bishop')
 const $whiteKing = $('<img src="./styles/imgs/whiteking.svg">').addClass('white king')
 const $whiteQueen = $('<img src="./styles/imgs/whitequeen.svg">').addClass('white queen')
-$('.rank-4 .file-2').append($whiteRook.clone());
+$('.rank-1 .file-1').append($whiteRook.clone());
 $('.rank-4 .file-3').append($whiteKnight.clone());
 $('.rank-5 .file-3').append($whiteBishop.clone());
 $('.rank-1 .file-4').append($whiteQueen.clone());
