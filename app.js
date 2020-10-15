@@ -43,7 +43,7 @@ const $whiteBishop = $('<img src="./styles/imgs/whitebishop.svg">').addClass('wh
 const $whiteKing = $('<img src="./styles/imgs/whiteking.svg">').addClass('white king')
 const $whiteQueen = $('<img src="./styles/imgs/whitequeen.svg">').addClass('white queen')
 $('.rank-1 .file-1').append($whiteRook.clone());
-$('.rank-5 .file-5').append($whiteKnight.clone());
+$('.rank-4 .file-3').append($whiteKnight.clone());
 $('.rank-1 .file-3').append($whiteBishop.clone());
 $('.rank-1 .file-4').append($whiteQueen.clone());
 $('.rank-1 .file-5').append($whiteKing.clone());
@@ -123,11 +123,13 @@ function select() {
             console.log('First IF');
           }
           let $query = $(`.rank-${current.$rank + y} .file-${current.$file + x}`);
-          console.log(`rank: ${y} file: ${x}`);
 
-          if ($query.children().length < 3 || $query.children().eq(1).attr('class').split(' ')[0] === 'black'){
-            $query.css({'border':'5px solid cyan'})
-            validMoves.push([$query.attr('class').split('-')[1],$query.parent().attr('class').split('-')[1]]);
+          if ($query.length > 0) {
+            console.log($query);
+            if ($query.children().length < 2|| $query.children().eq(1).attr('class').split(' ')[0] === 'black'){
+              $query.css({'border':'5px solid cyan'})
+              validMoves.push([$query.attr('class').split('-')[1],$query.parent().attr('class').split('-')[1]]);
+            }
           }
         }
       }
@@ -225,18 +227,19 @@ function select() {
 
       // TARGET SQUARE
       $('.file').one('click',function(){
+        $('.file').off('click'); // put this at top
         let $this = $(this);
         let target = {
           $file: parseInt($this.attr('class').split(' ')[1].split('-')[1]),
           $rank: parseInt($this.parent().attr('class').split(' ')[1].split('-')[1]),
           $piece: $this.children().eq(1),
         }
-        $('.file').off('click'); // put this at top
 
         for (let i = 0; i < validMoves.length; i++) {
           console.log(`validMoves: ${validMoves[i]}`);
           if (validMoves[i] == `${target.$file},${target.$rank}`) {
             if ($this.children().length > 1) {
+              console.log($this.children().eq(1));
               if (target.$piece.attr('class').split(' ')[0] == 'black') {
                 stats.white += worth[`${target.$piece.attr('class').split(' ')[1]}`]
                 $('.white-score').html(`White: ${stats.white}`)
@@ -245,6 +248,7 @@ function select() {
               }
             }
             current.$piece.appendTo($this);
+            break;
           }
         }
         console.log(`target: ${target.$file}, ${target.$rank}`);
