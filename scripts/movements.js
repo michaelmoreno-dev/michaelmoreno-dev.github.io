@@ -1,9 +1,8 @@
 function bishop(current, validMoves) {
   if (current.$piece.attr('class').split(' ')[1] === 'bishop') {
-    function bishopMove(d) {
-      for (let i = d; Math.abs(i) <= 8; i+=i) {
-        console.log(i);
-        let $query = $(`.rank-${current.$rank + i} .file-${current.$file + i}`)
+    function bishopMove(u,c) {
+      for (let i = u, n = c; Math.abs(i) <= 8; i+=u, n+=c) {
+        let $query = $(`.rank-${current.$rank + i} .file-${current.$file + n}`)
         if ($query.length < 1) {
           break;
         }
@@ -20,7 +19,10 @@ function bishop(current, validMoves) {
       }
     }
     // bishopMove(1);
-    bishopMove(-1);
+    bishopMove(1,1);
+    bishopMove(-1,-1);
+    bishopMove(1,-1);
+    bishopMove(-1,1);
   }
 }
 
