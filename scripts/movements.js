@@ -6,7 +6,7 @@ function king(current, validMoves) {
         return;
       }
       if ($query.children().length > 1) {
-        if ($query.children().eq(1).attr('class').split(' ')[0] === 'black') {
+        if ($query.children().eq(1).attr('class').split(' ')[0] !== current.$color) {
           $query.css({
             'z-index': '2',
             transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px red'
@@ -115,7 +115,7 @@ function queen(current, validMoves) {
           break;
         }
         if ($query.children().length > 1) {
-          if ($query.children().eq(1).attr('class').split(' ')[0] === 'white') {
+          if ($query.children().eq(1).attr('class').split(' ')[0] === current.$color) {
             break;
           }
           $query.css({
