@@ -36,36 +36,73 @@ function king(current, validMoves) {
 
 function pawn(current, validMoves) {
   if (current.$piece.attr('class').split(' ')[1] === 'pawn') {
-    let q = current.$rank === 2 ? 3:2
-
-    for (i = 1; i < q; i++) {
-      let $query = $(`.rank-${current.$rank + i} .file-${current.$file}`)
-
-      if ($query.children().length < 2) {
-        $query.css({
-          'z-index': '2',
-          transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px cyan'
-        })
-        console.log($query.attr('class'));
-        validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
-      }
-      
-      let $query2 = $(`.rank-${current.$rank + 1} .file-${current.$file + 1}`)
-      let $query3  = $(`.rank-${current.$rank + 1} .file-${current.$file - 1}`)
-      function cornerQuery(cornerQuery) {
-        if (cornerQuery.children().length > 1 ) {
-          if (cornerQuery.children().eq(1).attr('class').split(' ')[0] === 'black') {
-            cornerQuery.css({
-              'z-index': '2',
-              transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px red'
-            })
-            console.log(cornerQuery.attr('class'));
-            validMoves.push([cornerQuery.attr('class').split('-')[1], cornerQuery.parent().attr('class').split('-')[1]]);
+    if (current.$piece.attr('class').split(' ')[0] === 'white') {
+      // DETERMINE TO SEARCH 2 OR 1 UP
+      let q = current.$rank === 2 ? 3:2
+  
+      for (i = 1; i < q; i++) {
+        let $query = $(`.rank-${current.$rank + i} .file-${current.$file}`)
+  
+        if ($query.children().length < 2) {
+          $query.css({
+            'z-index': '2',
+            transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px cyan'
+          })
+          console.log($query.attr('class'));
+          validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
+        }
+        
+        let $query2 = $(`.rank-${current.$rank + 1} .file-${current.$file + 1}`)
+        let $query3  = $(`.rank-${current.$rank + 1} .file-${current.$file - 1}`)
+        function cornerQuery(cornerQuery) {
+          if (cornerQuery.children().length > 1 ) {
+            if (cornerQuery.children().eq(1).attr('class').split(' ')[0] === 'black') {
+              cornerQuery.css({
+                'z-index': '2',
+                transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px red'
+              })
+              console.log(cornerQuery.attr('class'));
+              validMoves.push([cornerQuery.attr('class').split('-')[1], cornerQuery.parent().attr('class').split('-')[1]]);
+            }
           }
         }
+        cornerQuery($query2);
+        cornerQuery($query3);
       }
-      cornerQuery($query2);
-      cornerQuery($query3);
+    }
+    else {
+      // DETERMINE TO SEARCH 2 OR 1 UP
+      let q = current.$rank === 2 ? -3 : -2
+
+      for (i = -1; i > q; i--) {
+        let $query = $(`.rank-${current.$rank + i} .file-${current.$file}`)
+
+        if ($query.children().length < 2) {
+          $query.css({
+            'z-index': '2',
+            transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px cyan'
+          })
+          console.log($query.attr('class'));
+          validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
+        }
+
+        let $query2 = $(`.rank-${current.$rank - 1} .file-${current.$file - 1}`)
+        let $query3 = $(`.rank-${current.$rank - 1} .file-${current.$file + 1}`)
+        function cornerQuery(cornerQuery) {
+          if (cornerQuery.children().length > 1) {
+            if (cornerQuery.children().eq(1).attr('class').split(' ')[0] === 'white') {
+              cornerQuery.css({
+                'z-index': '2',
+                transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px red'
+              })
+              console.log(cornerQuery.attr('class'));
+              validMoves.push([cornerQuery.attr('class').split('-')[1], cornerQuery.parent().attr('class').split('-')[1]]);
+            }
+          }
+        }
+        cornerQuery($query2);
+        cornerQuery($query3);
+      }
     }
   }
 }
@@ -119,7 +156,7 @@ function bishop(current, validMoves) {
           break;
         }
         if ($query.children().length > 1) {
-          if ($query.children().eq(1).attr('class').split(' ')[0] === 'white') {
+          if ($query.children().eq(1).attr('class').split(' ')[0] === current.$color) {
             break;
           }
           $query.css({
@@ -173,7 +210,15 @@ function knight(current, validMoves) {
   
       if ($query.length > 0) {
         console.log($query);
-        if ($query.children().length < 2 || $query.children().eq(1).attr('class').split(' ')[0] === 'black') {
+        if ($query.children().length > 1) {
+          if ($query.children().eq(1).attr('class').split(' ')[0] !== current.$color)
+          $query.css({
+            'z-index': '1',
+            transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px red'
+          })
+          validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
+        }
+        else {
           $query.css({
             'z-index': '1',
             transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px cyan'
@@ -191,7 +236,7 @@ function rook(current, validMoves) {
       let $query = $(`.rank-${q + 1} .file-${current.$file}`)
       // console.log('check: ' + `.rank-${q + 1} .file-${current.$file}`);
       if ($query.children().length > 1) {
-        if ($query.children().eq(1).attr('class').split(' ')[0] == 'white') {
+        if ($query.children().eq(1).attr('class').split(' ')[0] === current.$color) {
           $(`.rank-${q} .file-${current.$file}`).css({ 'border-top': '5px solid cyan' })
           break;
         }
@@ -216,7 +261,7 @@ function rook(current, validMoves) {
       let $query = $(`.rank-${q - 1} .file-${current.$file}`)
       // console.log('check: ' + `.rank-${q + 1} .file-${current.$file}`);
       if ($(`.rank-${q - 1} .file-${current.$file}`).children().length > 1) {
-        if ($query.children().eq(1).attr('class').split(' ')[0] == 'white') {
+        if ($query.children().eq(1).attr('class').split(' ')[0] === current.$color) {
           $(`.rank-${q} .file-${current.$file}`).css({ 'border-bottom': '5px solid cyan' })
           break;
         }
@@ -238,7 +283,7 @@ function rook(current, validMoves) {
       let $query = $(`.rank-${current.$rank} .file-${q + 1}`)
       console.log('check: ' + `.rank-${current.$rank} .file-${q + 1}`);
       if ($(`.rank-${current.$rank} .file-${q + 1}`).children().length > 1) {
-        if ($query.children().eq(1).attr('class').split(' ')[0] == 'white') {
+        if ($query.children().eq(1).attr('class').split(' ')[0] === current.$color) {
           $(`.rank-${current.$rank} .file-${q + 1}`).css({ 'border-right': '5px solid cyan' })
           break;
         }
@@ -260,7 +305,7 @@ function rook(current, validMoves) {
 
       console.log('check: ' + `.file-${q - 1} .rank-${current.$rank}`);
       if ($query.children().length > 1) {
-        if ($query.children().eq(1).attr('class').split(' ')[0] == 'white') {
+        if ($query.children().eq(1).attr('class').split(' ')[0] === current.$color) {
           $(`.rank-${current.$rank} .file-${q - 1}`).css({ 'border-left': '5px solid cyan' })
           break;
         }

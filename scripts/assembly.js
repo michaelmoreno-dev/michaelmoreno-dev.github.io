@@ -1,4 +1,3 @@
-$('<div>').attr('id', 'board').appendTo('.container');
 let color = 1;
 for (i = 8; i >= 1; i--) {
   $('<div>').addClass(`rank rank-${i}`).appendTo('#board');
@@ -13,8 +12,8 @@ for (i = 8; i >= 1; i--) {
     color++;
   }
 }
-$('<div>').addClass('white graveyard').prependTo('.container');
-$('<div>').addClass('black-graveyard').appendTo('.container');
+// $('<div>').addClass('white graveyard').prependTo('.container');
+// $('<div>').addClass('black-graveyard').appendTo('.container');
 
 // PIECES
 
@@ -31,8 +30,8 @@ const stats = {
   black: 0,
 }
 
-$('<h2>').html(`black: ${stats.white}`).addClass('black-score').prependTo('body');
-$('<h2>').html(`White: ${stats.white}`).addClass('white-score').appendTo('body');
+$('<h2>').html(`black: ${stats.white}`).addClass('black-score').prependTo('.middle');
+$('<h2>').html(`White: ${stats.white}`).addClass('white-score').appendTo('.middle');
 
 const $whitePawn = $('<img src="./styles/imgs/whitepawn.svg">').addClass('white pawn')
 const $whiteRook = $('<img src="./styles/imgs/whiterook.svg">').addClass('white rook')
@@ -44,7 +43,7 @@ $('.rank-1 .file-1').append($whiteRook.clone());
 $('.rank-1 .file-2').append($whiteKnight.clone());
 $('.rank-1 .file-3').append($whiteBishop.clone());
 $('.rank-1 .file-4').append($whiteQueen.clone());
-$('.rank-5 .file-6').append($whiteKing.clone());
+$('.rank-5 .file-5').append($whiteKing.clone());
 $('.rank-1 .file-6').append($whiteBishop.clone());
 $('.rank-1 .file-7').append($whiteKnight.clone());
 $('.rank-1 .file-8').append($whiteRook.clone());
@@ -72,13 +71,13 @@ $(`.rank-7 .file-4`).append($blackPawn.clone());
 $(`.rank-7 .file-5`).append($blackPawn.clone());
 $(`.rank-7 .file-6`).append($blackPawn.clone());
 $(`.rank-7 .file-7`).append($blackPawn.clone());
-$(`.rank-7 .file-8`).append($blackBishop.clone());
+$(`.rank-7 .file-8`).append($blackPawn.clone());
 
-$('.rank-5 .file-1').append($blackRook.clone());
+$('.rank-8 .file-1').append($blackRook.clone());
 $('.rank-8 .file-2').append($blackKnight.clone());
 $('.rank-8 .file-3').append($blackBishop.clone());
 $('.rank-8 .file-4').append($blackKing.clone());
 $('.rank-8 .file-5').append($blackQueen.clone());
 $('.rank-8 .file-6').append($blackBishop.clone());
-$('.rank-6 .file-4').append($blackKnight.clone());
+$('.rank-8 .file-7').append($blackKnight.clone());
 $('.rank-8 .file-8').append($blackRook.clone());
