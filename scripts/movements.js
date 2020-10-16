@@ -72,7 +72,7 @@ function pawn(current, validMoves) {
     }
     else {
       // DETERMINE TO SEARCH 2 OR 1 UP
-      let q = current.$rank === 2 ? -3 : -2
+      let q = current.$rank === 7 ? -3 : -2
 
       for (i = -1; i > q; i--) {
         let $query = $(`.rank-${current.$rank + i} .file-${current.$file}`)
@@ -116,7 +116,7 @@ function queen(current, validMoves) {
           break;
         }
         if ($query.children().length > 1) {
-          if ($query.children().eq(1).attr('class').split(' ')[0] === 'white') {
+          if ($query.children().eq(1).attr('class').split(' ')[0] === current.$color) {
             break;
           }
           $query.css({

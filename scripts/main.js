@@ -13,7 +13,10 @@ function inCheck () {
       if ($query.children().length > 1) {
         if ($query.children().eq(1).attr('class') === `black ${piece}` || $query.children().eq(1).attr('class') === 'black queen') {
           check = true;
-          $query.css('background-color','blue')
+          $query.css({
+            'z-index': '2',
+            transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px purple'
+          })
         }
         break;
       }
@@ -50,7 +53,10 @@ function inCheck () {
       }
       let $query = $(`.rank-${$kingRank + y} .file-${$kingFile + x}`);
       if ($query.children().eq(1).attr('class') === 'black knight') {
-        $query.css('background-color','red');
+        $query.css({
+          'z-index': '2',
+          transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px purple'
+        });
       }
     }
   }
@@ -62,7 +68,10 @@ function inCheck () {
       let $query = $(`.rank-${$kingRank + 1} .file-${$kingFile + i}`)
       if ($query.children().length > 1) {
         if ($query.children().eq(1).attr('class') === 'black pawn') {
-          $query.css('background-color', 'red');
+          $query.css({
+            'z-index': '2',
+            transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px purple'
+          });
           check = true;
         }
       }
@@ -122,9 +131,10 @@ function select() {
             if ($this.children().length > 1) {
               console.log($this.children().eq(1));
               if (target.$piece.attr('class').split(' ')[0] !== current.$color) {
-                stats.white += worth[`${target.$piece.attr('class').split(' ')[1]}`]
+                stats[current.$color] += worth[`${target.$piece.attr('class').split(' ')[1]}`]
                 $('.white-score').html(`White: ${stats.white}`)
-                target.$piece.appendTo('.black-graveyard');
+                let graveColor = current.$color === 'white' ? 'black':'white'
+                target.$piece.appendTo(`.${graveColor}-graveyard`);
                 current.$piece.appendTo($this);
               }
             }
