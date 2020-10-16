@@ -2,7 +2,7 @@
 https://www.michaelmoreno-dev.github.io
 Generated a 2D array represented with 8 parent divs containing 8 child divs each. Each div has a class indicating it's position in the matrix.
 
-I then select at these classes using jQuery to index the divs when adding, targeting, checking, and appending pieces. 
+I then select at these classes using jQuery to index the divs when adding, targeting, checking, and appending pieces.
 
 Every square contains an event handler listening for a click. When activated, the data of the current square is stored to reference later, and then movement functions are called to evaluate the available squares. A second event handler begins listening for a second click. When activated, this event handler will store the data of the target square and compare it to the available squares established in the movement functions.
 
