@@ -1,6 +1,6 @@
 let check = false;
-function inCheck () {
-  let $king = $('.white.king');
+function inCheck (color, enemy) {
+  let $king = $(`.${color}.king`);
   
   let $kingRank = parseInt($king.parent().parent().attr('class').split('-')[1]);
   let $kingFile = parseInt($king.parent().attr('class').split('-')[1]);
@@ -11,7 +11,7 @@ function inCheck () {
         break;
       }
       if ($query.children().length > 1) {
-        if ($query.children().eq(1).attr('class') === `black ${piece}` || $query.children().eq(1).attr('class') === 'black queen') {
+        if ($query.children().eq(1).attr('class') === `${enemy} ${piece}` || $query.children().eq(1).attr('class') === `${enemy} queen`) {
           check = true;
           $query.css({
             'z-index': '2',
@@ -52,7 +52,7 @@ function inCheck () {
         console.log('First IF');
       }
       let $query = $(`.rank-${$kingRank + y} .file-${$kingFile + x}`);
-      if ($query.children().eq(1).attr('class') === 'black knight') {
+      if ($query.children().eq(1).attr('class') === `${enemy} knight`) {
         $query.css({
           'z-index': '2',
           transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px purple'
@@ -67,7 +67,7 @@ function inCheck () {
       console.log(i);
       let $query = $(`.rank-${$kingRank + 1} .file-${$kingFile + i}`)
       if ($query.children().length > 1) {
-        if ($query.children().eq(1).attr('class') === 'black pawn') {
+        if ($query.children().eq(1).attr('class') === `${enemy} pawn`) {
           $query.css({
             'z-index': '2',
             transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px purple'
@@ -78,13 +78,11 @@ function inCheck () {
     }
   }
   pawnCheck();
-  if (check === true) {
-    check = true;
-  }
+
   if (check === true) {
     alert('check!');
   }
-  if ($king.parent().attr('class').split(' ')[1] === 'graveyard') {
+  if ($king.parent().attr('class').split(' ')[1] === `${color}-graveyard`) {
     alert('you lose!')
   }
 }
@@ -92,7 +90,7 @@ function inCheck () {
 
 function select() {
   // CURRENT SQUARE
-  $('.file').on('click',function(){
+  $('.file').one('click',function(){
     $('.file').off('click'); // put this at top
     let $this = $(this);
 
@@ -118,6 +116,7 @@ function select() {
       
       // TARGET SQUARE
       $('.file').one('click',function(){
+        $('.file').off('click');
         let $this = $(this);
         let target = {
           $file: parseInt($this.attr('class').split(' ')[1].split('-')[1]),
@@ -132,13 +131,15 @@ function select() {
               console.log($this.children().eq(1));
               if (target.$piece.attr('class').split(' ')[0] !== current.$color) {
                 stats[current.$color] += worth[`${target.$piece.attr('class').split(' ')[1]}`]
-                $('.white-score').html(`White: ${stats.white}`)
+                $(`.${current.$color}-score`).html(`${current.$color}: ${stats[current.$color]}`)
+                console.log(current.$color);
                 let graveColor = current.$color === 'white' ? 'black':'white'
                 target.$piece.appendTo(`.${graveColor}-graveyard`);
                 current.$piece.appendTo($this);
               }
             }
-            inCheck();
+            inCheck('white', 'black');
+            inCheck('black','white');
             current.$piece.appendTo($this);
             break;
           }
@@ -148,7 +149,8 @@ function select() {
         select();
       });
     }
-    inCheck();
+    inCheck('white','black');
+    inCheck('black','white');
   })
 }
 select();
