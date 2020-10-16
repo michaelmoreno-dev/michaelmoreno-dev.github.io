@@ -1,3 +1,77 @@
+function king(current, validMoves) {
+  if (current.$piece.attr('class').split(' ')[1] === 'king') {
+    function kingMove(y,x) {
+      let $query = $(`.rank-${current.$rank + y} .file-${current.$file + x}`)
+    }
+  }
+}
+
+function pawn(current, validMoves) {
+  if (current.$piece.attr('class').split(' ')[1] === 'pawn') {
+    let q = current.$rank === 2 ? 3:2
+
+    for (i = 1; i < q; i++) {
+      let $query = $(`.rank-${current.$rank + i} .file-${current.$file}`)
+      let $query2 = $(`.rank-${current.$rank + 1} .file-${current.$file + 1}`)
+      let $query3  = $(`.rank-${current.$rank + 1} .file-${current.$file - 1}`)
+      function cornerQuery(cornerQuery) {
+        if (cornerQuery.children().length > 1 ) {
+          if (cornerQuery.children().eq(1).attr('class').split(' ')[0] === 'black') {
+            cornerQuery.css({
+              'z-index': '2',
+              transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px red'
+            })
+            console.log(cornerQuery.attr('class'));
+            validMoves.push([cornerQuery.attr('class').split('-')[1], cornerQuery.parent().attr('class').split('-')[1]]);
+          }
+        }
+      }
+      cornerQuery($query2);
+      cornerQuery($query3);
+    }
+  }
+}
+
+function queen(current, validMoves) {
+  if (current.$piece.attr('class').split(' ')[1] === 'queen') {
+    function queenMove(u, c) {
+      for (let i = u, n = c; Math.abs(i) <= 8; i += u, n += c) {
+        let $query = $(`.rank-${current.$rank + i} .file-${current.$file + n}`)
+        if ($query.length < 1) {
+          break;
+        }
+        if ($query.children().length > 1) {
+          if ($query.children().eq(1).attr('class').split(' ')[0] === 'white') {
+            break;
+          }
+          $query.css({
+            'z-index': '2',
+            transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px red'
+          })
+          i = 8;
+        }
+        else {
+          $query.css({
+            'z-index': '1',
+            transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px cyan'
+          })
+        }
+        console.log($query.attr('class'));
+        validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
+      }
+    }
+    // bishopMove(1);
+    queenMove(1, 1);
+    queenMove(-1, -1);
+    queenMove(1, -1);
+    queenMove(-1, 1);
+    queenMove(1, 0)
+    queenMove(-1, 0)
+    queenMove(0, 1)
+    queenMove(0, -1)
+  }
+}
+
 function bishop(current, validMoves) {
   if (current.$piece.attr('class').split(' ')[1] === 'bishop') {
     function bishopMove(u,c) {
@@ -10,12 +84,18 @@ function bishop(current, validMoves) {
           if ($query.children().eq(1).attr('class').split(' ')[0] === 'white') {
             break;
           }
+          $query.css({
+            'z-index': '2',
+            transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px red'
+          })
           i = 8;
         }
-        $query.css({
-          'z-index':'1',
-          transition: 'box-shadow 0.3s ease-in-out', 'box-shadow':'0 0 10px 5px cyan'
-        })
+        else {
+          $query.css({
+            'z-index':'1',
+            transition: 'box-shadow 0.3s ease-in-out', 'box-shadow':'0 0 10px 7px cyan'
+          })
+        }
         console.log($query.attr('class'));
         validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
       }
@@ -56,7 +136,10 @@ function knight(current, validMoves) {
       if ($query.length > 0) {
         console.log($query);
         if ($query.children().length < 2 || $query.children().eq(1).attr('class').split(' ')[0] === 'black') {
-          $query.css({ 'border': '5px solid cyan' })
+          $query.css({
+            'z-index': '1',
+            transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px cyan'
+          })
           validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
         }
       }
@@ -81,7 +164,10 @@ function rook(current, validMoves) {
           break;
         }
       }
-      $query.css({ 'border': '2px solid cyan', 'border-left': '5px solid cyan', 'border-right': '5px solid cyan', 'width': '90px' })
+      $query.css({
+        'z-index': '1',
+        transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 5px cyan'
+      })
       // console.log($query.parent().attr('class').split('-')[1]);
       validMoves.push([current.$file, q + 1])
       // console.log(validMoves[1]);
