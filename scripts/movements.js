@@ -2,16 +2,55 @@ function king(current, validMoves) {
   if (current.$piece.attr('class').split(' ')[1] === 'king') {
     function kingMove(y,x) {
       let $query = $(`.rank-${current.$rank + y} .file-${current.$file + x}`)
+      if ($query.length < 1) {
+        return;
+      }
+      if ($query.children().length > 1) {
+        if ($query.children().eq(1).attr('class').split(' ')[0] === 'black') {
+          $query.css({
+            'z-index': '2',
+            transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px red'
+          })
+          validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
+        }
+      }
+      else {
+        $query.css({
+          'z-index': '2',
+          transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px cyan'
+        })
+        validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
+      }
     }
+    kingMove(1,0);
+    kingMove(1,1);
+    kingMove(0,1);
+    kingMove(-1,1);
+    kingMove(-1,0);
+    kingMove(-1,-1);
+    kingMove(0,-1);
+    kingMove(1,-1);
+    
   }
 }
 
 function pawn(current, validMoves) {
   if (current.$piece.attr('class').split(' ')[1] === 'pawn') {
+    alert('s')
     let q = current.$rank === 2 ? 3:2
 
     for (i = 1; i < q; i++) {
       let $query = $(`.rank-${current.$rank + i} .file-${current.$file}`)
+
+      if ($query.children().length < 2) {
+        $query.css({
+          'z-index': '2',
+          transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px cyan'
+        })
+        console.log($query.attr('class'));
+        validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
+      }
+      
       let $query2 = $(`.rank-${current.$rank + 1} .file-${current.$file + 1}`)
       let $query3  = $(`.rank-${current.$rank + 1} .file-${current.$file - 1}`)
       function cornerQuery(cornerQuery) {

@@ -15,7 +15,9 @@ function select() {
         $piece: $this.children().eq(1),
       }
       let validMoves = [];
-      pawn(current, validMoves)
+
+      king(current, validMoves);
+      pawn(current, validMoves);
       queen(current, validMoves)
       knight(current, validMoves);
       rook(current, validMoves);
