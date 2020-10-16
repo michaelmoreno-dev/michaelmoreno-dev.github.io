@@ -48,7 +48,6 @@ function pawn(current, validMoves) {
             'z-index': '2',
             transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 7px cyan'
           })
-          console.log($query.attr('class'));
           validMoves.push([$query.attr('class').split('-')[1], $query.parent().attr('class').split('-')[1]]);
         }
         
@@ -72,7 +71,7 @@ function pawn(current, validMoves) {
     }
     else {
       // DETERMINE TO SEARCH 2 OR 1 UP
-      let q = current.$rank === 2 ? -3 : -2
+      let q = current.$rank === 7 ? -3 : -2
 
       for (i = -1; i > q; i--) {
         let $query = $(`.rank-${current.$rank + i} .file-${current.$file}`)

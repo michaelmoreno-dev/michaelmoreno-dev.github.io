@@ -1,4 +1,5 @@
 let check = false;
+
 function inCheck () {
   let $king = $('.white.king');
   
@@ -80,7 +81,6 @@ function inCheck () {
   }
 }
 
-
 function select() {
   // CURRENT SQUARE
   $('.file').on('click',function(){
@@ -88,16 +88,19 @@ function select() {
     let $this = $(this);
 
     if ($this.children().length > 1) {
-      $this.css({
-        'z-index': '1',
-        transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 5px cyan'
-      });
+      
       const current = {
         $file: parseInt($this.attr('class').split(' ')[1].split('-')[1]),
         $rank: parseInt($this.parent().attr('class').split(' ')[1].split('-')[1]),
         $piece: $this.children().eq(1),
         $color: $this.children().eq(1).attr('class').split(' ')[0],
       }
+
+
+      $this.css({
+        'z-index': '1',
+        transition: 'box-shadow 0.3s ease-in-out', 'box-shadow': '0 0 10px 5px cyan'
+      });
       let validMoves = [];
 
       king(current, validMoves);
@@ -109,6 +112,7 @@ function select() {
       
       // TARGET SQUARE
       $('.file').one('click',function(){
+        $('.file').off('click');
         let $this = $(this);
         let target = {
           $file: parseInt($this.attr('class').split(' ')[1].split('-')[1]),
@@ -135,8 +139,8 @@ function select() {
         }
   
         $('.file').css({'z-index':'auto', 'border':'none', 'box-shadow':'none'})
-        select();
       });
+      select();
     }
     inCheck();
   })
