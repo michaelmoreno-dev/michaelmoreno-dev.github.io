@@ -15,3 +15,5 @@ make capture a function for reusability
 use variables in svgs for colors
 
 is let validMoves = []; caching a new array forever everytime?
+
+maybe have the if black check be done by checking if a child with a class of black exists in the query.

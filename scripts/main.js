@@ -1,3 +1,38 @@
+function inCheck () {
+  let $king = $('.white.king');
+  let $kingRank = parseInt($king.parent().parent().attr('class').split('-')[1]);
+  let $kingFile = parseInt($king.parent().attr('class').split('-')[1]);
+  function checkStraight(u, c, piece) {
+    for (let i = u, n = c; Math.abs(i) <= 8; i += u, n += c) {
+      let $query = $(`.rank-${$kingRank + i} .file-${$kingFile + n}`)
+      if ($query.length < 1) {
+        break;
+      }
+      $query.css('background-color','green');
+      if ($query.children().length > 1) {
+        if ($query.children().eq(1).attr('class') === `black ${piece}`) {
+          check = true;
+          $query.css('background-color','blue')
+        }
+        break;
+      }
+    }
+  }
+  // checkStraight(1,1, 'bishop')
+  // checkStraight(1,-1, 'bishop')
+  // checkStraight(-1,1, 'bishop')
+  // checkStraight(-1,-1, 'bishop');
+  // checkStraight(0,-1, 'rook');
+  // checkStraight(0,1, 'rook');
+  // checkStraight(1,0, 'rook');
+  // checkStraight(-1,0, 'rook');
+  
+  function knightCheck() {
+    
+  }
+}
+inCheck();
+
 function select() {
   // CURRENT SQUARE
   $('.file').on('click',function(){
@@ -104,5 +139,6 @@ function select() {
       });
     }
   })
+  inCheck();
 }
 select();

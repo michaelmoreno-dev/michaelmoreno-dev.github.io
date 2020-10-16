@@ -36,7 +36,6 @@ function king(current, validMoves) {
 
 function pawn(current, validMoves) {
   if (current.$piece.attr('class').split(' ')[1] === 'pawn') {
-    alert('s')
     let q = current.$rank === 2 ? 3:2
 
     for (i = 1; i < q; i++) {
