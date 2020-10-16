@@ -43,7 +43,7 @@ $('.rank-1 .file-1').append($whiteRook.clone());
 $('.rank-1 .file-2').append($whiteKnight.clone());
 $('.rank-1 .file-3').append($whiteBishop.clone());
 $('.rank-1 .file-4').append($whiteQueen.clone());
-$('.rank-5 .file-5').append($whiteKing.clone());
+$('.rank-1 .file-5').append($whiteKing.clone());
 $('.rank-1 .file-6').append($whiteBishop.clone());
 $('.rank-1 .file-7').append($whiteKnight.clone());
 $('.rank-1 .file-8').append($whiteRook.clone());

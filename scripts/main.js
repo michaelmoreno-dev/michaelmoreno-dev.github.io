@@ -134,7 +134,7 @@ function select() {
           }
         }
   
-        $('.file').css({'z-index':'0', 'border':'none', 'box-shadow':'none', 'outline':'none', 'height':'100px', 'width':'100px'})
+        $('.file').css({'z-index':'auto', 'border':'none', 'box-shadow':'none'})
         select();
       });
     }
