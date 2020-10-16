@@ -8,7 +8,7 @@ Every square contains an event handler listening for a click. When activated, th
 
 The movement functions work by querying specified squares and checking if they are empty, occupied by enemy pieces, or occupied by friendly pieces. If the former two are true, the square will be pushed into an array called validMoves, which is what the previously mentioned event handler compares the target squares to.
 
-Many of the pieces are line-of-sight bound, so a raycast system is needed to ensure that players can't jump over blocking pieces. I achieve this by using for-loops that query classes with an offset value.
+Many of the pieces are line-of-sight bound, so a raycast system is needed to ensure that players can't jump over blocking pieces. I achieve this by using for-loops that query classes with an offset value.1
 
 # unsolved problems / unadded features
 Need to improve checking system and implement checkmate check.
